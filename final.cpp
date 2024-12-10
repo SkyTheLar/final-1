@@ -9,14 +9,17 @@ COMSC 210 | Final | Skylar Robinson | IDE Used: Eclipse
 #include <fstream>
 #include <ctime>
 #include <deque>
+#include <vector>
 using namespace std;
 
-const int NAMES = 99, DRINKS = 10, MUFFINS = 5, ROUNDS = 10, INITIAL = 3;
+const int NAMES = 99, DRINKS = 10, MUFFINS = 5, BRACELETS = 6, ROUNDS = 10, INITIAL = 3;
 string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
 						 "Macchiato", "Cocoa", "Cold Brew", "Americano",
 						 "Espresso", "White Mocha"};
 string muffins[MUFFINS] = {"Blueberry", "Chocolate", "Banana Nut",
 		                  "Raspberry", "Plain"};
+string bracelets[BRACELETS] = {"red", "orange", "yellow", "green",
+		                       "blue", "purple"};
 
 struct Customer {
 	string name, order;
@@ -35,15 +38,20 @@ void addDrinkCust(CustNode*&);
 void remDrinkCust(CustNode*&);
 void addMuffCust(deque<Customer>&);
 void remMuffCust(deque<Customer>&);
+void addBraclCust(vector<Customer>&);
+void remBraclCust(vector<Customer>&);
 
 int main() {
 
 	srand(time(0));
 	CustNode* drinkLine = nullptr;
+	deque<Customer> muffLine;
+	vector<Customer> braclLine;
 
 	//initialize the queue
 	for (int i = 0; i < INITIAL; i++) {
 		addDrinkCust(drinkLine);
+		addMuffCust(muffLine);
 	}
 
 	for (int i = 0; i < ROUNDS; i++) {
@@ -53,6 +61,12 @@ int main() {
 		}
 		if (drinkLine != nullptr) {
 			remDrinkCust(drinkLine);
+		}
+		if (prob() <= 50) {
+			addMuffCust(muffLine);
+		}
+		if (!muffLine.empty()) {
+			remMuffCust(muffLine);
 		}
 	}
 
@@ -114,17 +128,31 @@ void addDrinkCust(CustNode* &head) {
 void remDrinkCust(CustNode* &head) {
 	CustNode* current = head;
 	head = head->next;
-	cout << "\t" << current->cust.name << " was served.\n";
+	cout << "\t" << current->cust.name << " was served "
+		 << current->cust.order << ".\n";
 	delete current;
 	current = nullptr;
 }
 
 void addMuffCust(deque<Customer> &line) {
 	Customer temp = getCust(muffins, MUFFINS);
-	cout << "\t" << temp.name << " ordered " << temp.order << ".\n";
+	cout << "\t" << temp.name << " ordered " << temp.order << " muffin.\n";
 	line.push_back(temp);
 }
 
 void remMuffCust(deque<Customer> &line) {
+	cout << "\t" << line.front().name << " was served "
+		 << line.front().order << " muffin.\n";
+	line.pop_front();
+}
+
+void addBraclCust(vector<Customer>& line) {
+	Customer temp = getCust(muffins, MUFFINS);
+	cout << "\t" << temp.name << " ordered "
+		 << temp.order << " friendship bracelet.\n";
+
+}
+
+void remBraclCust(vector<Customer>&) {
 
 }
