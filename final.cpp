@@ -10,22 +10,35 @@ COMSC 210 | Final | Skylar Robinson | IDE Used: Eclipse
 #include <ctime>
 using namespace std;
 
-const int NAMES = 99, DRINKS = 10;
-const string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
-							   "Macchiato", "Cocoa", "Cold Brew", "Americano",
-							   "Espresso", "White Mocha"};
+const int NAMES = 99, DRINKS = 10, ROUNDS = 10;
+
 
 struct Customer {
 	string name, order;
 };
 
+struct CustNode {
+	Customer cust;
+	CustNode* next;
+};
+
 string getName();
-string getDrink();
-Customer getCust();
+string getOrder(string[], int);
+Customer getCust(string[], int);
+int prob();
 
 int main() {
+	string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
+							 "Macchiato", "Cocoa", "Cold Brew", "Americano",
+							 "Espresso", "White Mocha"};
 	srand(time(0));
-	list<Customer> drinkLine;
+	CustNode* head = nullptr;
+
+	//initialize the queue
+
+	for (int i = 0; i < ROUNDS; i++) {
+
+	}
 
 	return 0;
 }
@@ -48,12 +61,19 @@ string getName() {
 	return name;
 }
 
-string getDrink() {
-	string drink;
-	drink = drinks[rand() % DRINKS];
-	return drink;
+string getOrder(string arr[], int LEN) {
+	string order;
+	order = arr[rand() % LEN];
+	return order;
 }
 
-Customer getCust() {
+Customer getCust(string arr[], int LEN) {
 	Customer temp;
+	temp.name = getName();
+	temp.order = getOrder(arr, LEN);
+	return temp;
+}
+
+int prob() {
+	return rand() % 100 + 1;
 }
