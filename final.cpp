@@ -10,6 +10,7 @@ COMSC 210 | Final | Skylar Robinson | IDE Used: Eclipse
 #include <ctime>
 #include <deque>
 #include <vector>
+#include <list>
 using namespace std;
 
 const int NAMES = 99, DRINKS = 10, MUFFINS = 5, BRACELETS = 6, ROUNDS = 10, INITIAL = 3;
@@ -52,6 +53,7 @@ int main() {
 	for (int i = 0; i < INITIAL; i++) {
 		addDrinkCust(drinkLine);
 		addMuffCust(muffLine);
+		addBraclCust(braclLine);
 	}
 
 	for (int i = 0; i < ROUNDS; i++) {
@@ -67,6 +69,12 @@ int main() {
 		}
 		if (!muffLine.empty()) {
 			remMuffCust(muffLine);
+		}
+		if (prob() <= 50) {
+			addBraclCust(braclLine);
+		}
+		if (!braclLine.empty()) {
+			remBraclCust(braclLine);
 		}
 	}
 
@@ -147,12 +155,14 @@ void remMuffCust(deque<Customer> &line) {
 }
 
 void addBraclCust(vector<Customer>& line) {
-	Customer temp = getCust(muffins, MUFFINS);
+	Customer temp = getCust(bracelets, BRACELETS);
 	cout << "\t" << temp.name << " ordered "
 		 << temp.order << " friendship bracelet.\n";
-
+	line.push_back(temp);
 }
 
-void remBraclCust(vector<Customer>&) {
-
+void remBraclCust(vector<Customer>& line) {
+	cout << "\t" << line.front().name << " was given "
+		 << line.front().order << " friendship bracelet.\n";
+	line.erase(line.begin());
 }
