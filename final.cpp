@@ -13,7 +13,8 @@ COMSC 210 | Final | Skylar Robinson | IDE Used: Eclipse
 #include <list>
 using namespace std;
 
-const int NAMES = 99, DRINKS = 10, MUFFINS = 5, BRACELETS = 6, ROUNDS = 10, INITIAL = 3;
+const int NAMES = 99, DRINKS = 10, MUFFINS = 5, BRACELETS = 6, ICE_CREAMS = 8,
+		  ROUNDS = 10, INITIAL = 3;
 string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
 						 "Macchiato", "Cocoa", "Cold Brew", "Americano",
 						 "Espresso", "White Mocha"};
@@ -21,6 +22,9 @@ string muffins[MUFFINS] = {"Blueberry", "Chocolate", "Banana Nut",
 		                  "Raspberry", "Plain"};
 string bracelets[BRACELETS] = {"red", "orange", "yellow", "green",
 		                       "blue", "purple"};
+string ice_creams[ICE_CREAMS] = {"Vanilla", "Chocolate", "Strawberry",
+								 "Cookies and Cream", "Coffee", "Birthday Cake",
+								 "Peanut Butter Chocolate", "Raspberry"};
 
 struct Customer {
 	string name, order;
@@ -41,6 +45,8 @@ void addMuffCust(deque<Customer>&);
 void remMuffCust(deque<Customer>&);
 void addBraclCust(vector<Customer>&);
 void remBraclCust(vector<Customer>&);
+void addIceCrCust(list<Customer>&);
+void remIceCrCust(list<Customer>&);
 
 int main() {
 
@@ -48,12 +54,14 @@ int main() {
 	CustNode* drinkLine = nullptr;
 	deque<Customer> muffLine;
 	vector<Customer> braclLine;
+	list<Customer> iceCrLine;
 
 	//initialize the queue
 	for (int i = 0; i < INITIAL; i++) {
 		addDrinkCust(drinkLine);
 		addMuffCust(muffLine);
 		addBraclCust(braclLine);
+		addIceCrCust(iceCrLine);
 	}
 
 	for (int i = 0; i < ROUNDS; i++) {
@@ -75,6 +83,12 @@ int main() {
 		}
 		if (!braclLine.empty()) {
 			remBraclCust(braclLine);
+		}
+		if (prob() <= 50) {
+			addIceCrCust(iceCrLine);
+		}
+		if (!iceCrLine.empty()) {
+			remIceCrCust(iceCrLine);
 		}
 	}
 
@@ -165,4 +179,17 @@ void remBraclCust(vector<Customer>& line) {
 	cout << "\t" << line.front().name << " was given "
 		 << line.front().order << " friendship bracelet.\n";
 	line.erase(line.begin());
+}
+
+void addIceCrCust(list<Customer>& line) {
+	Customer temp = getCust(ice_creams, ICE_CREAMS);
+	cout << "\t" << temp.name << " ordered "
+		 << temp.order << " ice cream.\n";
+	line.push_back(temp);
+}
+
+void remIceCrCust(list<Customer>& line) {
+	cout << "\t" << line.front().name << " was served "
+		 << line.front().order << " ice cream.\n";
+	line.pop_front();
 }
