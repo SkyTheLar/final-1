@@ -10,16 +10,21 @@ COMSC 210 | Final | Skylar Robinson | IDE Used: Eclipse
 #include <ctime>
 using namespace std;
 
-const int NAMES = 99;
-
-string getName();
+const int NAMES = 99, DRINKS = 10;
+const string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
+							   "Macchiato", "Cocoa", "Cold Brew", "Americano",
+							   "Espresso", "White Mocha"};
 
 struct Customer {
 	string name, order;
 };
 
+string getName();
+string getDrink();
+Customer getCust();
+
 int main() {
-	srand(time());
+	srand(time(0));
 	list<Customer> drinkLine;
 
 	return 0;
@@ -41,4 +46,14 @@ string getName() {
 	//close file
 	in.close();
 	return name;
+}
+
+string getDrink() {
+	string drink;
+	drink = drinks[rand() % DRINKS];
+	return drink;
+}
+
+Customer getCust() {
+	Customer temp;
 }
