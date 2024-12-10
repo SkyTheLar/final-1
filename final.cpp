@@ -8,12 +8,15 @@ COMSC 210 | Final | Skylar Robinson | IDE Used: Eclipse
 #include <list>
 #include <fstream>
 #include <ctime>
+#include <deque>
 using namespace std;
 
-const int NAMES = 99, DRINKS = 10, ROUNDS = 10, INITIAL = 3	;
+const int NAMES = 99, DRINKS = 10, MUFFINS = 5, ROUNDS = 10, INITIAL = 3;
 string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
 						 "Macchiato", "Cocoa", "Cold Brew", "Americano",
 						 "Espresso", "White Mocha"};
+string muffins[MUFFINS] = {"Blueberry", "Chocolate", "Banana Nut",
+		                  "Raspberry", "Plain"};
 
 struct Customer {
 	string name, order;
@@ -28,8 +31,10 @@ string getName();
 string getOrder(string[], int);
 Customer getCust(string[], int);
 int prob();
-void addDrinkCust(CustNode*);
-void remDrinkCust(CustNode*);
+void addDrinkCust(CustNode*&);
+void remDrinkCust(CustNode*&);
+void addMuffCust(deque<Customer>&);
+void remMuffCust(deque<Customer>&);
 
 int main() {
 
@@ -50,13 +55,6 @@ int main() {
 			remDrinkCust(drinkLine);
 		}
 	}
-
-	CustNode* current = drinkLine;
-	while (current) {
-		cout << current->cust.name << " " << current->cust.order << endl;
-		current++;
-	}
-
 
 	return 0;
 }
@@ -96,7 +94,7 @@ int prob() {
 	return rand() % 100 + 1;
 }
 
-void addDrinkCust(CustNode* head) {
+void addDrinkCust(CustNode* &head) {
 	CustNode* temp = new CustNode;
 	temp->cust = getCust(drinks, DRINKS);
 	temp->next = nullptr;
@@ -113,10 +111,20 @@ void addDrinkCust(CustNode* head) {
 	}
 }
 
-void remDrinkCust(CustNode* head) {
+void remDrinkCust(CustNode* &head) {
 	CustNode* current = head;
 	head = head->next;
 	cout << "\t" << current->cust.name << " was served.\n";
 	delete current;
 	current = nullptr;
+}
+
+void addMuffCust(deque<Customer> &line) {
+	Customer temp = getCust(muffins, MUFFINS);
+	cout << "\t" << temp.name << " ordered " << temp.order << ".\n";
+	line.push_back(temp);
+}
+
+void remMuffCust(deque<Customer> &line) {
+
 }
