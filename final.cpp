@@ -31,7 +31,7 @@ struct Customer {
 };
 
 struct CustNode {
-	Customer cust;
+	string name, order;
 	CustNode* next;
 };
 
@@ -132,9 +132,10 @@ int prob() {
 
 void addDrinkCust(CustNode* &head) {
 	CustNode* temp = new CustNode;
-	temp->cust = getCust(drinks, DRINKS);
+	temp->name = getName();
+	temp->order = getOrder(drinks, DRINKS);
 	temp->next = nullptr;
-	cout << "\t" << temp->cust.name << " ordered " << temp->cust.order << ".\n";
+	cout << "\t" << temp->name << " ordered " << temp->order << ".\n";
 	if (head == nullptr) {
 		head = temp;
 	}
@@ -150,8 +151,8 @@ void addDrinkCust(CustNode* &head) {
 void remDrinkCust(CustNode* &head) {
 	CustNode* current = head;
 	head = head->next;
-	cout << "\t" << current->cust.name << " was served "
-		 << current->cust.order << ".\n";
+	cout << "\t" << current->name << " was served "
+		 << current->order << ".\n";
 	delete current;
 	current = nullptr;
 }
