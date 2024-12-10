@@ -10,8 +10,10 @@ COMSC 210 | Final | Skylar Robinson | IDE Used: Eclipse
 #include <ctime>
 using namespace std;
 
-const int NAMES = 99, DRINKS = 10, ROUNDS = 10;
-
+const int NAMES = 99, DRINKS = 10, ROUNDS = 10, INITIAL = 3	;
+string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
+						 "Macchiato", "Cocoa", "Cold Brew", "Americano",
+						 "Espresso", "White Mocha"};
 
 struct Customer {
 	string name, order;
@@ -30,22 +32,31 @@ void addDrinkCust(CustNode*);
 void remDrinkCust(CustNode*);
 
 int main() {
-	string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
-							 "Macchiato", "Cocoa", "Cold Brew", "Americano",
-							 "Espresso", "White Mocha"};
+
 	srand(time(0));
 	CustNode* drinkLine = nullptr;
 
 	//initialize the queue
+	for (int i = 0; i < INITIAL; i++) {
+		addDrinkCust(drinkLine);
+	}
 
 	for (int i = 0; i < ROUNDS; i++) {
+		cout << "Round " << i + 1 << ":\n";
 		if (prob() <= 50) {
 			addDrinkCust(drinkLine);
 		}
-		if (!(drinkLine == nullptr)) {
+		if (drinkLine != nullptr) {
 			remDrinkCust(drinkLine);
 		}
 	}
+
+	CustNode* current = drinkLine;
+	while (current) {
+		cout << current->cust.name << " " << current->cust.order << endl;
+		current++;
+	}
+
 
 	return 0;
 }
@@ -86,14 +97,26 @@ int prob() {
 }
 
 void addDrinkCust(CustNode* head) {
-
-
+	CustNode* temp = new CustNode;
+	temp->cust = getCust(drinks, DRINKS);
+	temp->next = nullptr;
+	cout << "\t" << temp->cust.name << " ordered " << temp->cust.order << ".\n";
+	if (head == nullptr) {
+		head = temp;
+	}
+	else {
+		CustNode* current = head;
+		while (current->next != nullptr) {
+			current = current->next;
+		}
+		current->next = temp;
+	}
 }
 
 void remDrinkCust(CustNode* head) {
 	CustNode* current = head;
 	head = head->next;
-	cout << current->cust.name << " was served.\n";
+	cout << "\t" << current->cust.name << " was served.\n";
 	delete current;
 	current = nullptr;
 }
