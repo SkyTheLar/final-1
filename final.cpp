@@ -26,18 +26,25 @@ string getName();
 string getOrder(string[], int);
 Customer getCust(string[], int);
 int prob();
+void addDrinkCust(CustNode*);
+void remDrinkCust(CustNode*);
 
 int main() {
 	string drinks[DRINKS] = {"Black Coffee", "Latte", "Mocha", "Frappuccino",
 							 "Macchiato", "Cocoa", "Cold Brew", "Americano",
 							 "Espresso", "White Mocha"};
 	srand(time(0));
-	CustNode* head = nullptr;
+	CustNode* drinkLine = nullptr;
 
 	//initialize the queue
 
 	for (int i = 0; i < ROUNDS; i++) {
-
+		if (prob() <= 50) {
+			addDrinkCust(drinkLine);
+		}
+		if (!(drinkLine == nullptr)) {
+			remDrinkCust(drinkLine);
+		}
 	}
 
 	return 0;
@@ -76,4 +83,17 @@ Customer getCust(string arr[], int LEN) {
 
 int prob() {
 	return rand() % 100 + 1;
+}
+
+void addDrinkCust(CustNode* head) {
+
+
+}
+
+void remDrinkCust(CustNode* head) {
+	CustNode* current = head;
+	head = head->next;
+	cout << current->cust.name << " was served.\n";
+	delete current;
+	current = nullptr;
 }
